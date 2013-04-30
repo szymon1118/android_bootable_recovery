@@ -636,6 +636,13 @@ int cmd_mmc_backup_raw_partition(const char *partition, const char *filename)
         }
 #endif
 
+#if defined(CWM_EMMC_UBOOT_DEVICE_NAME) && defined(CWM_EMMC_UBOOT_DEVICE_SIZE)
+        if (strcmp(partition, STR(CWM_EMMC_UBOOT_DEVICE_NAME)) == 0) {
+            size = CWM_EMMC_UBOOT_DEVICE_SIZE;
+            printf("CWM_EMMC_UBOOT_DEVICE: %s; Size: 0x%x\n", partition, size);
+        }
+#endif
+
         return mmc_raw_dump_internal(partition, filename, size);
     }
 }
