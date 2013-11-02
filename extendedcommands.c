@@ -1335,9 +1335,7 @@ void show_advanced_menu()
                             "key test",
                             "show log",
                             "fix permissions",
-                            "partition sdcard",
                             "partition external sdcard",
-                            "partition internal sdcard",
                             NULL
     };
 
@@ -1347,14 +1345,8 @@ void show_advanced_menu()
         list[1] = "reboot to download mode";
     }
 
-    if (!can_partition("/sdcard")) {
-        list[8] = NULL;
-    }
     if (!can_partition("/external_sd")) {
-        list[9] = NULL;
-    }
-    if (!can_partition("/emmc")) {
-        list[10] = NULL;
+        list[8] = NULL;
     }
 
     for (;;)
@@ -1429,13 +1421,7 @@ void show_advanced_menu()
                 ui_print("Done!\n");
                 break;
             case 8:
-                partition_sdcard("/sdcard");
-                break;
-            case 9:
                 partition_sdcard("/external_sd");
-                break;
-            case 10:
-                partition_sdcard("/emmc");
                 break;
         }
     }
