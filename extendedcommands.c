@@ -626,19 +626,10 @@ int confirm_selection(const char* title, const char* confirm)
     }
     else {
         char* items[] = { "No",
-                        "No",
-                        "No",
-                        "No",
-                        "No",
-                        "No",
-                        "No",
-                        confirm, //" Yes -- wipe partition",   // [7]
-                        "No",
-                        "No",
-                        "No",
+                        confirm, //" Yes -- wipe partition",   // [1]
                         NULL };
         int chosen_item = get_menu_selection(confirm_headers, items, 0, 0);
-        return chosen_item == 7;
+        return chosen_item == 1;
     }
     }
 
@@ -1328,14 +1319,11 @@ void show_advanced_menu()
     };
 
     static char* list[] = { "reboot recovery",
-                            "reboot to bootloader",
-                            "power off",
                             "wipe dalvik cache",
                             "report error",
                             "key test",
                             "show log",
                             "fix permissions",
-                            "partition external sdcard",
                             NULL
     };
 
@@ -1363,23 +1351,6 @@ void show_advanced_menu()
                 break;
             }
             case 1:
-            {
-                if (!strcmp(bootloader_mode, "download")) {
-                    ui_print("Rebooting to download mode...\n");
-                    reboot_main_system(ANDROID_RB_RESTART2, 0, "download");
-                } else {
-                    ui_print("Rebooting to bootloader...\n");
-                    reboot_main_system(ANDROID_RB_RESTART2, 0, "bootloader");
-                }
-                break;
-            }
-            case 2:
-            {
-                ui_print("Shutting down...\n");
-                reboot_main_system(ANDROID_RB_POWEROFF, 0, 0);
-                break;
-            }
-            case 3:
                 if (0 != ensure_path_mounted("/data"))
                     break;
                 ensure_path_mounted("/sd-ext");
@@ -1392,10 +1363,10 @@ void show_advanced_menu()
                 }
                 ensure_path_unmounted("/data");
                 break;
-            case 4:
+            case 2:
                 handle_failure(1);
                 break;
-            case 5:
+            case 3:
             {
                 ui_print("Outputting key codes.\n");
                 ui_print("Go back to end debugging.\n");
@@ -1410,18 +1381,15 @@ void show_advanced_menu()
                 while (action != GO_BACK);
                 break;
             }
-            case 6:
+            case 4:
                 ui_printlogtail(12);
                 break;
-            case 7:
+            case 5:
                 ensure_path_mounted("/system");
                 ensure_path_mounted("/data");
                 ui_print("Fixing permissions...\n");
                 __system("fix_permissions");
                 ui_print("Done!\n");
-                break;
-            case 8:
-                partition_sdcard("/external_sd");
                 break;
         }
     }
