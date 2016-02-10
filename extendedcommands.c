@@ -1324,6 +1324,7 @@ void show_advanced_menu()
                             "key test",
                             "show log",
                             "fix permissions",
+                            "partition sdcard",
                             NULL
     };
 
@@ -1390,6 +1391,10 @@ void show_advanced_menu()
                 ui_print("Fixing permissions...\n");
                 __system("fix_permissions");
                 ui_print("Done!\n");
+                break;
+
+            case 6:
+                partition_sdcard("/sdcard");
                 break;
         }
     }
